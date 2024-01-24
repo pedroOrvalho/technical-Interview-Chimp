@@ -11,10 +11,12 @@ type Props = {
   setSelected: React.Dispatch<React.SetStateAction<readonly number[]>>;
   page: number;
   rowsPerPage: number;
+  searchValue: string;
 };
 
 export default function ProductsTable(props: Props) {
-  const { products, selected, setSelected, page, rowsPerPage } = props;
+  const { products, selected, setSelected, page, rowsPerPage, searchValue } =
+    props;
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<keyof Product>("Name");
 
@@ -60,6 +62,7 @@ export default function ProductsTable(props: Props) {
             rowsPerPage={rowsPerPage}
             order={order}
             orderBy={orderBy}
+            searchValue={searchValue}
           />
         </Table>
       </TableContainer>

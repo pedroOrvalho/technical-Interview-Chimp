@@ -13,11 +13,13 @@ type Props = {
   rowsPerPage: number;
   order: Order;
   orderBy: keyof Product;
+  searchValue:string
 };
 
 export default function ProductTableBody(props: Props) {
-  const { products, selected, setSelected, page, rowsPerPage, order, orderBy } =
+  const { products, selected, setSelected, page, rowsPerPage, order, orderBy, searchValue } =
     props;
+
 
   function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -82,7 +84,7 @@ export default function ProductTableBody(props: Props) {
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage]
+    [searchValue, order, orderBy, page, rowsPerPage]
   );
 
   return (

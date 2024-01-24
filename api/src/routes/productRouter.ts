@@ -17,13 +17,6 @@ export default router;
 
 /**
  * @swagger
- * tags:
- *   name: Products
- *   description: API for managing products
- */
-
-/**
- * @swagger
  * /products:
  *   get:
  *     summary: Get all products

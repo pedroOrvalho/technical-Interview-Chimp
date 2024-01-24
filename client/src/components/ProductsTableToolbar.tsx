@@ -64,7 +64,7 @@ export default function ProductsTableToolbar({ numSelected, selected }: Props) {
             id="tableTitle"
             component="div"
           >
-            Nutrition
+            Products
           </Typography>
         )}
         {numSelected > 0 ? (

@@ -9,9 +9,11 @@ import ProductsTableToolbar from "../components/ProductsTableToolbar";
 import ProductsTablePagination from "../components/ProductsTablePagination";
 
 import { Product } from "../Types";
+import Search from "../components/Search";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [searchValue, setSearchValue] = useState<string>("");
   const [selected, setSelected] = useState<readonly number[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(7);
@@ -32,22 +34,38 @@ export default function Products() {
     getProducts();
   }, []);
 
+  const searchProductsList: Product[] = searchValue
+    ? products.filter(
+        (product: Product) =>
+          product.Name.toLowerCase().includes(searchValue.toLowerCase()) ||
+          product.ProductNumber.toLowerCase().includes(
+            searchValue.toLowerCase()
+          ) ||
+          product.Color.toLowerCase().includes(searchValue.toLowerCase())
+      )
+    : products;
+
   if (loading) {
     return <p>Loading...</p>;
   }
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <ProductsTableToolbar numSelected={selected.length} selected={selected} />
+        <ProductsTableToolbar
+          numSelected={selected.length}
+          selected={selected}
+        />
+        <Search searchValue={searchValue} setSearchValue={setSearchValue} />
         <ProductsTable
-          products={products}
+          products={searchProductsList}
           selected={selected}
           setSelected={setSelected}
           page={page}
           rowsPerPage={rowsPerPage}
+          searchValue={searchValue}
         />
         <ProductsTablePagination
-          products={products}
+          products={searchProductsList}
           setPage={setPage}
           page={page}
           setRowsPerPage={setRowsPerPage}
