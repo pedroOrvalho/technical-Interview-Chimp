@@ -16,7 +16,7 @@ export default function Products() {
   const [searchValue, setSearchValue] = useState<string>("");
   const [selected, setSelected] = useState<readonly number[]>([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(7);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [loading, setLoading] = useState(true);
 
   const getProducts = async () => {

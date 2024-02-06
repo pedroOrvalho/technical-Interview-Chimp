@@ -13,21 +13,33 @@ type Props = {
   rowsPerPage: number;
   order: Order;
   orderBy: keyof Product;
-  searchValue:string
+  searchValue: string;
 };
 
 export default function ProductTableBody(props: Props) {
-  const { products, selected, setSelected, page, rowsPerPage, order, orderBy, searchValue } =
-    props;
-
+  const {
+    products,
+    selected,
+    setSelected,
+    page,
+    rowsPerPage,
+    order,
+    orderBy,
+    searchValue,
+  } = props;
 
   function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
+      // If the value of b[orderBy] is less than the value of a[orderBy],
+      // return -1 to indicate that 'b' should come before 'a'.
       return -1;
     }
     if (b[orderBy] > a[orderBy]) {
+      // If the value of b[orderBy] is greater than the value of a[orderBy],
+      // return 1 to indicate that 'a' should come before 'b'.
       return 1;
     }
+    // If the values are equal, return 0 to indicate that the order is not important.
     return 0;
   }
 
@@ -38,6 +50,7 @@ export default function ProductTableBody(props: Props) {
     a: { [key in Key]: number | string },
     b: { [key in Key]: number | string }
   ) => number {
+    console.log(order);
     return order === "desc"
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
@@ -57,15 +70,21 @@ export default function ProductTableBody(props: Props) {
     });
     return stabilizedThis.map((el) => el[0]);
   }
+
   const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
     const selectedIndex = selected.indexOf(id);
     let newSelected: readonly number[] = [];
 
     if (selectedIndex === -1) {
+      // If the clicked id is not in the selected array, add it to the newSelected array.
       newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
+      // If the clicked id is the first element in the selected array, remove it.
       newSelected = newSelected.concat(selected.slice(1));
+      // If the clicked id is the last element in the selected array, remove it.
     } else if (selectedIndex === selected.length - 1) {
+      // If the clicked id is somewhere in the middle of the selected array,
+      // concatenate the elements before and after the clicked id.
       newSelected = newSelected.concat(selected.slice(0, -1));
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(

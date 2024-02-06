@@ -95,7 +95,7 @@ export const updateProductByIdService = async (
     return result;
   } catch (error) {
     throw new NotFoundError(
-      `Could not update user with product ${id} from the database.`
+      `Could not update product with ${id} from the database.`
     );
   }
 };

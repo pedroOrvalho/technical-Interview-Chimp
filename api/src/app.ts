@@ -1,9 +1,9 @@
 import Express from "express";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
-import swaggerJSDoc from "swagger-jsdoc";
 
 import productRouter from "./routes/productRouter";
+import { swaggerSpec } from "./utils/swagger";
 
 const app = Express();
 
@@ -14,27 +14,7 @@ app.use(
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   })
 );
-
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/", productRouter);
-
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "Product API Documentation",
-      version: "0.1.0",
-    },
-    servers: [
-      {
-        url: "http://localhost:4000/",
-      },
-    ],
-  },
-  apis: ["./routes/productRouter.js"],
-};
-
-const swaggerSpec = swaggerJSDoc(options);
-
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 export default app;

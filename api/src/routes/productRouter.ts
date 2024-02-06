@@ -8,13 +8,6 @@ import {
 
 const router = Router();
 
-router.get("/products", getAllProductsController);
-router.get("/products/detail/:id", getProductByIdController);
-router.put("/products/:id", updateProductByIdController);
-router.delete("/products/delete/:id", deleteProductByIdController);
-
-export default router;
-
 /**
  * @swagger
  * /products:
@@ -28,6 +21,7 @@ export default router;
  *           application/json:
  *             example: []
  */
+router.get("/products", getAllProductsController);
 
 /**
  * @swagger
@@ -49,3 +43,9 @@ export default router;
  *           application/json:
  *             example: {}
  */
+router.get("/products/detail/:id", getProductByIdController);
+
+router.put("/products/:id", updateProductByIdController);
+router.delete("/products/delete/:id", deleteProductByIdController);
+
+export default router;

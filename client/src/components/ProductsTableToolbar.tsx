@@ -4,7 +4,7 @@ import {
   Typography,
   Tooltip,
   IconButton,
-  Alert,
+  Box,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
@@ -15,10 +15,11 @@ type Props = {
 };
 
 export default function ProductsTableToolbar({ numSelected, selected }: Props) {
+  
   const onClickDelete = async () => {
     for (const id of selected) {
       await axios
-        .delete(`http://localhost:4000/product/delete/${id}`)
+        .delete(`http://localhost:4000/products/delete/${id}`)
         .then((res) => {
           if (res.status === 200) {
             alert(`Item with ID ${id} deleted.`);
@@ -27,7 +28,7 @@ export default function ProductsTableToolbar({ numSelected, selected }: Props) {
         .catch((error) => {
           if (error.response.status === 500) {
             alert(
-              "It's not possible to delete the item because it's connected to another"
+              `It's not possible to delete the item with ${id} because it's connected to another database table`
             );
           }
         });
@@ -67,13 +68,15 @@ export default function ProductsTableToolbar({ numSelected, selected }: Props) {
             Products
           </Typography>
         )}
-        {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton>
-              <DeleteIcon onClick={() => onClickDelete()} />
-            </IconButton>
-          </Tooltip>
-        ) : null}
+        <Box>
+          {numSelected > 0 ? (
+            <Tooltip title="Delete">
+              <IconButton>
+                <DeleteIcon onClick={() => onClickDelete()} />
+              </IconButton>
+            </Tooltip>
+          ) : null}
+        </Box>
       </Toolbar>
     </div>
   );
